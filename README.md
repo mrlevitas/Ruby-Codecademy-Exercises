@@ -24,7 +24,7 @@ codecademy.com/en/tracks/ruby
 Glossary reference<br>
 http://www.codecademy.com/glossary/ruby/
 
-&lt;--------&gt;
+&lt;--------&gt;<br>
 FILES
 
 1) syntax.rb<br>
