@@ -2,8 +2,8 @@
 # contact: mrlevitas@yahoo.com
 # 7/7/2015
 
-# This file shows & explains common conventions, rules, and syntax for Ruby 
-# classes & OOP design. Basic programming knowledge assumed. 
+# This file shows & explains common conventions, rules, and syntax for 
+# classes & OOP design in Ruby. Basic programming knowledge assumed. 
 
 # Initially put together as notes for personal use, I thought it might be of 
 # benefit to others. 
@@ -14,22 +14,37 @@
 # codecademy.com/en/tracks/ruby
 
 
-# Classes
+# Class Syntax
 
 class Person
-    def initialize(name)
-    	# Use @ before a variable to signify that it's an instance variable. 
+    def initialize(name) # function that "boots up" each instance of this class
+    	# Use '@'' before a variable to signify that it's an instance variable. 
   		# This means that the variable is attached to the instance of the class.
-        @name = name
+      @name = name
     end
 end
 
 
 matz = Person.new("Yukihiro")
 
-#-------------------------------------------------------------------------------
-class Language
+################################################################################
+# SCOPE syntax
 
+# INSTANCE scope
+# '@' marks a variable as an instance variable
+# instance variables belong to a particular object (or "instance")
+class Person
+  def initialize(name, age, profession)
+    @name = name
+    @age = age
+    @profession = profession
+  end
+end
+
+#-------------------------------------------------------------------------------
+# Class example using Instance scope
+
+class Language
   def initialize(name, creator)
     @name = name
     @creator = creator
@@ -49,8 +64,6 @@ python.description
 javascript.description
 
 #-------------------------------------------------------------------------------
-# different scopes examples
-
 # GLOBAL scope
 # '$' marks a varaiable as global, it can be accessed from anywhere
 class MyClass
@@ -61,18 +74,9 @@ puts $my_variable
 
 # OUTPUT
 # Hello!
-#-------------------------------------------------------------------------------
 
-# INSTANCE scope
-# '@' marks a variable as an instance variable
-# instance variables belong to a particular object (or "instance")
-class Person
-  def initialize(name, age, profession)
-    @name = name
-    @age = age
-    @profession = profession
-  end
-end
+# Global variables can also be declared by defining the variable outside of any 
+# method or class, usually at top of file, no '$' needed
 
 #-------------------------------------------------------------------------------
 # CLASS scope
@@ -106,10 +110,6 @@ dhh = Person.new("David")
 puts "Number of Person instances: #{Person.number_of_instances}"
 
 # Number of Person instances: 2
-
-
-
-
 
 #-------------------------------------------------------------------------------
 # Putting it all together!
@@ -152,7 +152,6 @@ puts "Files: #{Computer.display_files}"
 # Manufacturer: Mango Computer, Inc.
 # Files: {:hello=>"Hello, world!"}
 
-
 ################################################################################
 # Ruby on Rails source code example
 # RecordInvalid is a class
@@ -188,6 +187,7 @@ err = SuperBadError.new
 err.display_error
 
 # Error! Error!
+
 #-------------------------------------------------------------------------------
 # Inherit but OVER RIDE 
 
@@ -201,7 +201,6 @@ class Creature
   end
 end
 
-# Add your code below!
 class Dragon < Creature
    def fight
        return "Breathes fire!" # overides base/parent class'/superclass' fight method
@@ -233,6 +232,7 @@ class Dragon < Person; end
 # superclass mismatch for class Dragon
 
 ################################################################################
+# Virtual Computer example
 
 class Machine
   @@users = {}
@@ -313,6 +313,8 @@ eric.bank_account_number
 
 # attr_accessor to make a variable readable and writeable
 
+
+# Converting classic code below which uses methods to our new attr_x syntax
 class Person
   def initialize(name, job)
     @name = name
@@ -328,7 +330,8 @@ class Person
   end
 end
 
-#-------------------------------------------------------------------------------
+#----------------------------
+# attr syntax, does the same as above
 
 class Person
     
@@ -369,6 +372,7 @@ module Circle
 end
 
 #-------------------------------------------------------------------------------
+# Namespacing
 # scope resolution operator
 
 # module::constant
@@ -464,7 +468,6 @@ TheHereAnd.now
 ################################################################################
 # BANK ACCOUNT example using public/private methods
 
-
 class Account
   attr_reader :name, :balance
   def initialize(name, balance=100)
@@ -485,7 +488,7 @@ class Account
     end
   end
   
-  private
+  private # instances should not be able to directly access users pin
   
   def pin
     @pin = 1234
@@ -497,7 +500,7 @@ class Account
 end
 
 my_account = Account.new("Eric", 1_000_000)
-# Underscores are ignored. You can put them in to make them more readable.
+# Underscores are ignored. You can put them in to make numbers more readable.
 my_account.withdraw(11, 500_000)
 my_account.display_balance(1234)
 my_account.withdraw(1234, 500_000)
@@ -509,7 +512,6 @@ my_account.display_balance(1234)
 # Balance: $500000.
 
 
-
 =begin
 How could you improve this class? You might:
 
@@ -517,5 +519,3 @@ How could you improve this class? You might:
 2) Include error checking that prevents users from overdrawing their accounts
 3) Create CheckingAccounts or SavingsAccounts that inherit from Account
 =end
-
-

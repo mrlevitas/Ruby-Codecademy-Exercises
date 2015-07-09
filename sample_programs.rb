@@ -3,7 +3,7 @@
 # 7/7/2015
 
 # This file is a collection of small Ruby programs for beginners. Each program
-# usually focuses on & demonstrates a specific topic in Ruby.
+# usually focuses on & demonstrates a specific, or several, topics in Ruby.
 
 # Basic programming knowledge assumed. 
 
@@ -47,17 +47,6 @@ is string interpolation: replaces variable as a placeholder w/ its value
 =end
 
 ################################################################################
-# Unless: unique Ruby control flow
-
-hungry = false
-
-unless hungry
-    puts "I'm writing Ruby programs!"
-else
-    puts "Time to eat!"
-end
-
-################################################################################
 # Writing a letter from prison: Redacting a specified word from text input
 
 puts "Text to search through: "
@@ -84,7 +73,7 @@ How might you improve this program?
 =end
 
 ################################################################################
-# String Substitution
+# String Substitution: Donald Duck
 
 print "Thtring, pleathe!: "
 user_input = gets.chomp
@@ -100,6 +89,7 @@ puts "Your string is: #{user_input}"
 
 ################################################################################
 # Histogram of words from Text
+
 # Build a hash from that input. Each key in the hash will be a word from the 
 # user; each value will be the number of times that word occurs.
 
@@ -138,6 +128,8 @@ Spain 1
 
 
 ################################################################################
+# Checking Primes
+
 def prime(n)
   puts "That's not an integer." unless n.is_a? Integer
   is_prime = true
@@ -160,31 +152,6 @@ prime(51)
 prime(97)
 
 ################################################################################
-
-# splat arguments. Splat arguments are arguments preceded by a *, 
-# which signals to Ruby: "Hey Ruby, I don't know how many arguments 
-# there are about to be, but it could be more than one."
-
-def what_up(greeting, *bros)
-  bros.each { |bro| puts "#{greeting}, #{bro}!" }
-end
- 
-what_up("What up", "Justin", "Ben", "Kevin Sorbo")
- ################################################################################
-# methods vs blocks
-
- # method that capitalizes a word
-def capitalize(string) 
-  puts "#{string[0].upcase}#{string[1..-1]}"
-end
-
-capitalize("ryan") # prints "Ryan"
-capitalize("jane") # prints "Jane"
-
-# block that capitalizes each string in the array
-["ryan", "jane"].each {|string| puts "#{string[0].upcase}#{string[1..-1]}"} # prints "Ryan", then "Jane"
-
-################################################################################
 # sort books
 
 books = ["Charlie and the Chocolate Factory", "War and Peace", "Utopia", "A Brief History of Time", "A Wrinkle in Time"]
@@ -196,7 +163,8 @@ books.sort! { |firstBook, secondBook| firstBook <=> secondBook }
 
 books.reverse!
 
-################################################################################
+#-------------------------------------------------------------------------------
+
 def alphabetize(arr, rev=false)
   if rev
     arr.sort { |item1, item2| item2 <=> item1 }
@@ -212,64 +180,24 @@ puts "Z-A: #{alphabetize(books, true)}"
 
 
 ################################################################################
+# Evens
+
 numbers = [1, 2, 3, 4, 5, 6]
 evens = []
+
 numbers.each do |number|
   if number % 2 == 0
     evens.push(number)
   end
 end
+
 print evens
 # prints '[2, 4, 6]'
 
-
-
 ################################################################################
-# benchmark symbols vs strings
-require 'benchmark'
+# A Night at the Movies w/ CRUD functionality
+# utilizing Case syntax
 
-string_AZ = Hash[("a".."z").to_a.zip((1..26).to_a)]
-symbol_AZ = Hash[(:a..:z).to_a.zip((1..26).to_a)]
-
-string_time = Benchmark.realtime do
-  100_000.times { string_AZ["r"] }
-end
-
-symbol_time = Benchmark.realtime do
-  100_000.times { symbol_AZ[:r] }
-end
-
-puts "String time: #{string_time} seconds."
-puts "Symbol time: #{symbol_time} seconds."
-
-################################################################################
-# hash select
-
-grades = { alice: 100,
-  bob: 92,
-  chris: 95,
-  dave: 97
-}
-
-grades.select {|name, grade| grade < 97}
-# ==> {:bob=>92, :chris=>95}
-
-grades.select { |k, v| k == :alice }
-# ==> {:alice=>100}
-
-
-
-################################################################################
-my_hash = { one: 1, two: 2, three: 3 }
-
-my_hash.each_key { |k| print k, " " }
-# ==> one two three
-
-my_hash.each_value { |v| print v, " " }
-# ==> 1 2 3
-
-
-################################################################################
 movies = {
   Memento: 3,
   Primer: 4,
@@ -325,27 +253,6 @@ end
 
 
 ################################################################################
-ruby_is_eloquent = true
-ruby_is_ugly = false
-
-# no 'end'  in one line ifs
-puts "Ruby is eloquent!" if ruby_is_eloquent
-puts "Ruby's not ugly!" unless ruby_is_ugly
-
-################################################################################
-# ternary conditional expression. It's called "ternary" 
-# because it takes three arguments: 
-# a boolean, an expression to evaluate if the boolean is true, and an expression to evaluate if the boolean is false.
-
-# boolean ? Do this if true: Do this if false
-
-puts 3 < 4 ? "3 is less than 4!" : "3 is not less than 4."
-
-three = 3
-puts three == 3 ? "Of course." : "What?"
-# ==> puts "Of course."
-
-################################################################################
 # case: when/then
 # you can fold it up like so:
 
@@ -377,76 +284,15 @@ puts favorite_book
 # Why's (Poignant) Guide to Ruby
 
 ################################################################################
-# Implicit Return
-
-# Ruby's methods will return the result of the last evaluated expression.
-# if you have a Ruby method like this one:
-
-def add(a,b)
-  return a + b
-end
-
-# You can simply write:
-
-def add(a,b)
-  a + b
-end
-
-
-################################################################################
-
-def a
-  puts "A was evaluated!"
-  return true
-end
-
-def b
-  puts "B was also evaluated!"
-  return true
-end
-
-# no parantheses for funtion call
-puts a || b
-puts "------"
-puts a && b
-
-# A was evaluated!
-# true
-------
-# A was evaluated!
-# B was also evaluated!
-# true
-
-
-################################################################################
 # upto and downto
 
 95.upto(100) { |num| print num, " " }
 # Prints 95 96 97 98 99 100
 
-
 ################################################################################
-# concatenation operator 
-[1, 2, 3] << 4
-# ==> [1, 2, 3, 4]
-# Good news: it also works on strings! You can do:
+# Refactoring a Program 
+# making it more concise, readable, and Ruby-esque
 
-"Yukihiro " << "Matsumoto"
-# ==> "Yukihiro Matsumoto"
-################################################################################
-# .to_s vs string interpolation
-
-age = 26
-"I am " + age.to_s + " years old."
-# ==> "I am 26 years old."
-"I am " << age.to_s << " years old."
-# ==> "I am 26 years old."
-
-"I am #{age} years old."
-# ==> I am 26 years old.
-
-################################################################################
-# Program to refactor
 $VERBOSE = nil    # We'll explain this at the end of the lesson.
 require 'prime'   # This is a module. We'll cover these soon!
 
@@ -471,8 +317,8 @@ end
 
 first_n_primes(10)
 
-#----------------------------
-# $VERBOSE = nil on line 1; this allowed us to use the old-style Prime.new from Ruby 1.8
+#-------------------------------------------------------------------------------
+# $VERBOSE = nil , this allowed us to use the old-style Prime.new from Ruby 1.8
 
 $VERBOSE = nil    # We'll explain this at the end of the lesson.
 require 'prime'   # This is a module. We'll cover these soon!
@@ -496,7 +342,9 @@ end
 first_n_primes(10)
 
 
-#------------------------------------------------
+#-------------------------------------------------------------------------------
+# new Ruby, shorter program
+
 require 'prime'
 
 def first_n_primes(n)
@@ -512,56 +360,14 @@ end
 first_n_primes(10)
 
 ################################################################################
-
-# collect returns a copy
-my_nums = [1, 2, 3]
-my_nums.collect { |num| num ** 2 }
-# ==> [1, 2, 3]
-
-my_nums.collect! { |num| num ** 2 }
-# ==> [1, 4, 9]
-
-################################################################################
-# yield
-def block_test
-  puts "We're in the method!"
-  puts "Yielding to the block..."
-  yield
-  puts "We're back in the method!"
-end
-
-block_test { puts ">>> We're in the block!" }
-
-#-------------------------------------------
-# yielding to block w/ param
-def yield_name(name)
-  puts "In the method! Let's yield."
-  yield("Kim")
-  puts "In between the yields!"
-  yield(name)
-  puts "Block complete! Back in the method."
-end
-
-yield_name("Eric") { |n| puts "My name is #{n}." }
-
-################################################################################
-# Block example
+# BLOCK example
 odds_n_ends = [:weezard, 42, "Trady Blix", 3, true, 19, 12.345]
 
 ints = odds_n_ends.select{ |x| x.is_a? Integer}
 
 
 ################################################################################
-#Procs (Procedures)
-
-=begin
-Why bother saving our blocks as procs? There are two main advantages:
-
-Procs are full-fledged objects, so they have all the powers and abilities of objects. (Blocks do not.)
-
-Unlike blocks, procs can be called over and over without rewriting them. 
-This prevents you from having to retype the contents of your block every time you need to execute a particular bit of code.
-=end
+#PROCs (Procedures) examples
 
 multiples_of_3 = Proc.new do |n|
   n % 3 == 0
@@ -569,8 +375,7 @@ end
 
 (1..100).to_a.select(&multiples_of_3)
 
-
-#----------------------------------------------
+#-------------------------------------------------------------------------------
 cube = Proc.new { |x| x ** 3 }
 # We can then pass the proc to a method that would 
 # otherwise take a block, and we don't have to rewrite the block over and over!
@@ -580,9 +385,11 @@ cube = Proc.new { |x| x ** 3 }
 # ==> [64, 125, 216]
 # (The .collect! and .map! methods do the exact same thing.)
 
-# The & is used to convert the cube proc into a block (since .collect! and .map! normally take a block). 
+# The & is used to convert the cube proc into a block 
+# (since .collect! and .map! normally take a block). 
 # We'll do this any time we pass a proc to a method that expects a block.
-#--------------------------------------------------
+
+#-------------------------------------------------------------------------------
 floats = [1.2, 3.45, 0.91, 7.727, 11.42, 482.911]
 
 round_down = Proc.new do |n|
@@ -591,7 +398,7 @@ end
 
 ints = floats.collect(&round_down)
 
-#----------------------------------------------------
+#-------------------------------------------------------------------------------
 # Here at the amusement park, you have to be four feet tall
 # or taller to ride the roller coaster. Let's use .select on
 # each group to get only the ones four feet tall or taller.
@@ -608,31 +415,15 @@ can_ride_1 = group_1.select( &over_4_feet )
 can_ride_2 = group_2.select( &over_4_feet)
 can_ride_3 = group_3.select( &over_4_feet)
 
-#-------------------------------------------
-def greeter
-    yield
-end
-
-phrase = Proc.new{puts "Hello there!"}
-
-greeter(&phrase)
-
-#-------------------------------------------
-# call your proc!
-hi = Proc.new {puts "Hello!"}
-
-hi.call
-
-#-----------------------------------------
+#-------------------------------------------------------------------------------
 ages = [23, 101, 7, 104, 11, 94, 100, 121, 101, 70, 44]
 
 # Add your code below!
 
 under_100 = Proc.new{|age| age < 100}
 
-
 youngsters = ages.select(&under_100)
-#-----------------------------------------
+#-------------------------------------------------------------------------------
 # symbols, meet procs
 
 strings = ["1", "2", "3"]
@@ -641,23 +432,10 @@ nums = strings.map(&:to_i)
 numbers_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 strings_array = numbers_array.map(&:to_s)
 
-
-
 ################################################################################
-# LAMBDAs
+# LAMBDA examples
 # lambda { |param| block }
 
-def lambda_demo(a_lambda)
-  puts "I'm the method!"
-  a_lambda.call
-end
-
-lambda_demo(lambda { puts "I'm the lambda!" })
-
-# I'm the method!
-# I'm the lambda!
-
-#-----------------------------------------------
 crew = {
   captain: "Picard",
   first_officer: "Riker",
@@ -674,13 +452,13 @@ first_half = lambda {|key , value| value < "M"}
 
 a_to_m = crew.select(&first_half)
 
-#-----------------------------------------------
+#-------------------------------------------------------------------------------
 strings = ["leonardo", "donatello", "raphael", "michaelangelo"]
 
 symbolize = lambda { |x| x.to_sym }
 
 symbols = strings.collect(&symbolize)
-#-----------------------------------------------
+#-------------------------------------------------------------------------------
 my_array = ["raindrops", :kettles, "whiskers", :mittens, :packages]
 
 symbol_filter = lambda {|param| param.is_a? Symbol }
@@ -718,27 +496,3 @@ puts batman_ironman_lambda
 
 # Batman will win!
 # Iron Man will win!
-
-
-
-################################################################################
-# blocks, procs, and lambdas REVIEW
-=begin
-1) A block is just a bit of code between do..end or {}. 
-   It's not an object on its own, but it can be passed to methods like .each or .select.
-2) A proc is a saved block we can use over and over.
-3) A lambda is just like a proc, only it cares about the number of arguments it gets and 
-   it returns to its calling method rather than returning immediately.
-=end
-
-
-
-
-
-
-
-
-
-
-
-
