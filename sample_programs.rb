@@ -1,3 +1,65 @@
+# Aggregated by: Roman Levitas
+# contact: mrlevitas@yahoo.com
+# 7/7/2015
+
+# This file is a collection of small Ruby programs for beginners. Each program
+# usually focuses on & demonstrates a specific topic in Ruby.
+
+# Basic programming knowledge assumed. 
+
+# Initially put together as notes for personal use, I thought it might be of 
+# benefit to others. 
+
+# Enjoy!
+
+# original course material:
+# codecademy.com/en/tracks/ruby
+
+################################################################################
+# A "Case" Study (formatting capitalization)
+
+# It makes our lives easier as programmers to make their input standard before 
+# doing anything with it.
+
+print "What's your first name?"
+first_name = gets.chomp 
+# gets input from the user. When getting input, Ruby automatically adds a 
+# blank line (or newline) after each bit of input; chomp removes that extra line.
+first_name.capitalize! # capitalizes the first letter of a string 
+                       # and makes the rest of the letters lower case.
+
+print "What's your last name?"
+last_name = gets.chomp
+last_name.capitalize! # '!' modifies the value contained w/in the variable itself
+
+print "What city are you from?"
+city = gets.chomp
+city.capitalize!
+
+print "What state or province are you from?"
+state = gets.chomp
+state.upcase!
+
+puts "Your name is #{first_name} #{last_name} and you're from #{city}, #{state}!"
+=begin
+#{variable} 
+is string interpolation: replaces variable as a placeholder w/ its value
+=end
+
+################################################################################
+# Unless: unique Ruby control flow
+
+hungry = false
+
+unless hungry
+    puts "I'm writing Ruby programs!"
+else
+    puts "Time to eat!"
+end
+
+################################################################################
+# Writing a letter from prison: Redacting a specified word from text input
+
 puts "Text to search through: "
 text = gets.chomp
 puts "Word to redact: "
@@ -13,9 +75,17 @@ words.each do |word|
   end
 end
 
+=begin
+How might you improve this program?
 
+1) Add an additional if statement to re-prompt the user for input if they don't enter anything
+2) Think about how you might account for words in which the letter "c" sounds like an "s"
+3) Think about how you might preserve the user's original capitalization
+=end
 
-##################################
+################################################################################
+# String Substitution
+
 print "Thtring, pleathe!: "
 user_input = gets.chomp
 user_input.downcase!
@@ -28,7 +98,11 @@ end
   
 puts "Your string is: #{user_input}"
 
-###################################
+################################################################################
+# Histogram of words from Text
+# Build a hash from that input. Each key in the hash will be a word from the 
+# user; each value will be the number of times that word occurs.
+
 puts "Text please: "
 text = gets.chomp
 
@@ -39,11 +113,31 @@ frequencies = Hash.new(0) # if accessing non-existent key, default spits out "Ni
 words.each { |word| frequencies[word] += 1 }
 # can't use ! operator
 # the .sort_by function returns an array of arrays 
-frequencies = frequencies.sort_by {|a, b| b }
-frequencies.reverse!
+frequencies = frequencies.sort_by {|a, b| b } # .sort_by returns an array of arrays
+frequencies.reverse! # we reverse the array order so that the colors with the 
+                     # largest counts are first.
 frequencies.each { |word, frequency| puts word + " " + frequency.to_s }
 
-#####################################
+
+# sample input:
+# "the rain in Spain falls mainly on the plain"
+
+# sample output:
+=begin
+
+the 2
+falls 1
+on 1
+mainly 1
+in 1
+rain 1
+plain 1
+Spain 1
+
+=end
+
+
+################################################################################
 def prime(n)
   puts "That's not an integer." unless n.is_a? Integer
   is_prime = true
@@ -65,7 +159,7 @@ prime(11)
 prime(51)
 prime(97)
 
-#########################################
+################################################################################
 
 # splat arguments. Splat arguments are arguments preceded by a *, 
 # which signals to Ruby: "Hey Ruby, I don't know how many arguments 
@@ -76,7 +170,7 @@ def what_up(greeting, *bros)
 end
  
 what_up("What up", "Justin", "Ben", "Kevin Sorbo")
- ##############################################
+ ################################################################################
 # methods vs blocks
 
  # method that capitalizes a word
@@ -90,7 +184,7 @@ capitalize("jane") # prints "Jane"
 # block that capitalizes each string in the array
 ["ryan", "jane"].each {|string| puts "#{string[0].upcase}#{string[1..-1]}"} # prints "Ryan", then "Jane"
 
-#############################################
+################################################################################
 # sort books
 
 books = ["Charlie and the Chocolate Factory", "War and Peace", "Utopia", "A Brief History of Time", "A Wrinkle in Time"]
@@ -102,7 +196,7 @@ books.sort! { |firstBook, secondBook| firstBook <=> secondBook }
 
 books.reverse!
 
-#############################################
+################################################################################
 def alphabetize(arr, rev=false)
   if rev
     arr.sort { |item1, item2| item2 <=> item1 }
@@ -117,7 +211,7 @@ puts "A-Z: #{alphabetize(books)}"
 puts "Z-A: #{alphabetize(books, true)}"
 
 
-#############################
+################################################################################
 numbers = [1, 2, 3, 4, 5, 6]
 evens = []
 numbers.each do |number|
@@ -130,7 +224,7 @@ print evens
 
 
 
-############################################
+################################################################################
 # benchmark symbols vs strings
 require 'benchmark'
 
@@ -148,7 +242,7 @@ end
 puts "String time: #{string_time} seconds."
 puts "Symbol time: #{symbol_time} seconds."
 
-#############################################
+################################################################################
 # hash select
 
 grades = { alice: 100,
@@ -165,7 +259,7 @@ grades.select { |k, v| k == :alice }
 
 
 
-###############################################
+################################################################################
 my_hash = { one: 1, two: 2, three: 3 }
 
 my_hash.each_key { |k| print k, " " }
@@ -175,7 +269,7 @@ my_hash.each_value { |v| print v, " " }
 # ==> 1 2 3
 
 
-################################################
+################################################################################
 movies = {
   Memento: 3,
   Primer: 4,
@@ -230,7 +324,7 @@ else
 end
 
 
-########################################
+################################################################################
 ruby_is_eloquent = true
 ruby_is_ugly = false
 
@@ -238,7 +332,7 @@ ruby_is_ugly = false
 puts "Ruby is eloquent!" if ruby_is_eloquent
 puts "Ruby's not ugly!" unless ruby_is_ugly
 
-########################################
+################################################################################
 # ternary conditional expression. It's called "ternary" 
 # because it takes three arguments: 
 # a boolean, an expression to evaluate if the boolean is true, and an expression to evaluate if the boolean is false.
@@ -251,7 +345,7 @@ three = 3
 puts three == 3 ? "Of course." : "What?"
 # ==> puts "Of course."
 
-#############################################
+################################################################################
 # case: when/then
 # you can fold it up like so:
 
@@ -262,7 +356,7 @@ case language
   else puts "I don't know!"
 end
 
-#############################################
+################################################################################
 #  conditional assignment operator: ||=. It's made up 
 # of the or (||) logical operator and the normal = assignment operator.
 favorite_book = nil
@@ -282,7 +376,7 @@ puts favorite_book
 # Cat's Cradle
 # Why's (Poignant) Guide to Ruby
 
-###############################################
+################################################################################
 # Implicit Return
 
 # Ruby's methods will return the result of the last evaluated expression.
@@ -299,7 +393,7 @@ def add(a,b)
 end
 
 
-##############################################
+################################################################################
 
 def a
   puts "A was evaluated!"
@@ -324,14 +418,14 @@ puts a && b
 # true
 
 
-#########################################
+################################################################################
 # upto and downto
 
 95.upto(100) { |num| print num, " " }
 # Prints 95 96 97 98 99 100
 
 
-#######################################
+################################################################################
 # concatenation operator 
 [1, 2, 3] << 4
 # ==> [1, 2, 3, 4]
@@ -339,7 +433,7 @@ puts a && b
 
 "Yukihiro " << "Matsumoto"
 # ==> "Yukihiro Matsumoto"
-#####################################
+################################################################################
 # .to_s vs string interpolation
 
 age = 26
@@ -351,7 +445,7 @@ age = 26
 "I am #{age} years old."
 # ==> I am 26 years old.
 
-#######################################
+################################################################################
 # Program to refactor
 $VERBOSE = nil    # We'll explain this at the end of the lesson.
 require 'prime'   # This is a module. We'll cover these soon!
@@ -417,7 +511,7 @@ end
 
 first_n_primes(10)
 
-##################################################
+################################################################################
 
 # collect returns a copy
 my_nums = [1, 2, 3]
@@ -427,7 +521,7 @@ my_nums.collect { |num| num ** 2 }
 my_nums.collect! { |num| num ** 2 }
 # ==> [1, 4, 9]
 
-################################################
+################################################################################
 # yield
 def block_test
   puts "We're in the method!"
@@ -450,14 +544,14 @@ end
 
 yield_name("Eric") { |n| puts "My name is #{n}." }
 
-#################################################
+################################################################################
 # Block example
 odds_n_ends = [:weezard, 42, "Trady Blix", 3, true, 19, 12.345]
 
 ints = odds_n_ends.select{ |x| x.is_a? Integer}
 
 
-################################################
+################################################################################
 #Procs (Procedures)
 
 =begin
@@ -549,7 +643,7 @@ strings_array = numbers_array.map(&:to_s)
 
 
 
-################################################
+################################################################################
 # LAMBDAs
 # lambda { |param| block }
 
@@ -593,7 +687,7 @@ symbol_filter = lambda {|param| param.is_a? Symbol }
 
 symbols = my_array.select(&symbol_filter)
 
-####################################################
+################################################################################
 # Lambdas vs. Procs
 
 =begin  
@@ -627,7 +721,7 @@ puts batman_ironman_lambda
 
 
 
-############################################
+################################################################################
 # blocks, procs, and lambdas REVIEW
 =begin
 1) A block is just a bit of code between do..end or {}. 
